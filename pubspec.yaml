@@ -25,6 +25,7 @@ flutter:
 
   assets:
     - assets/gemini_icon.png
+    - assets/gemini_splash.png
 
   # fonts:
   #   - family: Schyler
