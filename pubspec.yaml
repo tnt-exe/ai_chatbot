@@ -16,11 +16,30 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  flutter_native_splash:
+  flutter_launcher_icons:
   flutter_lints: ^4.0.0
 
-flutter:
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: "assets/gemini_icon.png"
+  android: true
+  web: true
 
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: false
+  image_path: "assets/gemini_icon.png"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/gemini_icon.png"
+  adaptive_icon_foreground_inset: 30
+  web:
+    generate: true
+    image_path: "assets/gemini_icon.png"
+    background_color: "#FFFFFF"
+    theme_color: "#FFFFFF"
+
+flutter:
   uses-material-design: true
 
   assets:
