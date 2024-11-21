@@ -1,6 +1,6 @@
 name: ai_chatbot
 description: "A new Flutter project."
-publish_to: 'none' 
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -12,6 +12,9 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
+  flutter_bloc:
+  hydrated_bloc:
+  path_provider:
 
 dev_dependencies:
   flutter_test:

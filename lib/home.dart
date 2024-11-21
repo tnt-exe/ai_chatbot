@@ -1,6 +1,8 @@
 import 'package:ai_chatbot/message.dart';
 import 'package:ai_chatbot/responsive.dart';
+import 'package:ai_chatbot/theme_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,14 +32,27 @@ class _HomePageState extends State<HomePage> {
             itemBuilder: (context) {
               return [
                 PopupMenuItem(
-                  child: const Text("Change mode"),
+                  child: Row(
+                    children: [
+                      Theme.of(context).brightness == Brightness.dark
+                          ? const Icon(Icons.dark_mode)
+                          : const Icon(Icons.light_mode),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        Theme.of(context).brightness == Brightness.dark
+                            ? "Light Mode"
+                            : "Dark Mode",
+                      ),
+                    ],
+                  ),
                   onTap: () {
-                    //didnt work, might need to implement with hydrated_bloc later
-                    Theme.of(context).brightness == Brightness.light
-                        ? MediaQuery.platformBrightnessOf(context) ==
-                            Brightness.light
-                        : MediaQuery.platformBrightnessOf(context) ==
-                            Brightness.dark;
+                    context.read<ThemeCubit>().updateTheme(
+                          Theme.of(context).brightness == Brightness.dark
+                              ? ThemeMode.light
+                              : ThemeMode.dark,
+                        );
                   },
                 )
               ];
