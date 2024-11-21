@@ -1,4 +1,5 @@
 import 'package:ai_chatbot/onboarding.dart';
+import 'package:ai_chatbot/theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,10 +14,9 @@ class GeminiChatApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Gemini Chat",
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-        useMaterial3: true,
-      ),
+      theme: lightMode,
+      darkTheme: darkMode,
+      // themeMode: ThemeMode.dark,
       home: const OnboardingPage(),
     );
   }

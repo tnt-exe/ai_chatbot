@@ -24,7 +24,26 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        backgroundColor: Colors.white,
+        actions: [
+          PopupMenuButton(
+            offset: const Offset(0, 50),
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  child: const Text("Change mode"),
+                  onTap: () {
+                    //didnt work, might need to implement with hydrated_bloc later
+                    Theme.of(context).brightness == Brightness.light
+                        ? MediaQuery.platformBrightnessOf(context) ==
+                            Brightness.light
+                        : MediaQuery.platformBrightnessOf(context) ==
+                            Brightness.dark;
+                  },
+                )
+              ];
+            },
+          ),
+        ],
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -42,9 +61,6 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const Text(
                   "Gemini GPT",
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
                 ),
               ],
             ),
@@ -74,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           decoration: BoxDecoration(
                             color:
-                                message.isUser ? Colors.blue : Colors.grey[300],
+                                message.isUser ? Colors.blue : Colors.grey[350],
                             borderRadius: message.isUser
                                 ? const BorderRadius.only(
                                     topLeft: Radius.circular(20),
@@ -109,16 +125,11 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(32),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: const Offset(0, 3),
-                        ),
-                      ]),
+                    borderRadius: BorderRadius.circular(32),
+                    border: Border.all(
+                      color: Colors.grey.withOpacity(0.8),
+                    ),
+                  ),
                   child: Row(
                     children: [
                       Expanded(
@@ -138,7 +149,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                       IconButton(
                         onPressed: () {},
-                        icon: const Icon(Icons.send),
+                        icon: const Icon(
+                          Icons.send,
+                          color: Colors.blue,
+                        ),
                       ),
                     ],
                   ),
