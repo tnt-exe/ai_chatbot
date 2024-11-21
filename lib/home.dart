@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Center(
         child: SizedBox(
-          width: context.isPhoneScreen
+          width: context.isTabletScreen
               ? context.screenWidth
               : context.responsiveScreenWidth,
           child: Column(

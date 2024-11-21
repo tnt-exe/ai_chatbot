@@ -12,7 +12,7 @@ class OnboardingPage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Center(
           child: SizedBox(
-            width: context.isPhoneScreen
+            width: context.isTabletScreen
                 ? context.screenWidth
                 : context.responsiveScreenWidth,
             child: Column(
