@@ -178,6 +178,7 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         child: TextField(
                           controller: _textEditingController,
+                          onSubmitted: (value) => callGeminiModel(),
                           decoration: const InputDecoration(
                             hintText: "Ask me anything",
                             border: InputBorder.none,
