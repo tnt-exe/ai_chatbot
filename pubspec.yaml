@@ -15,6 +15,8 @@ dependencies:
   flutter_bloc:
   hydrated_bloc:
   path_provider:
+  flutter_dotenv:
+  google_generative_ai:
 
 dev_dependencies:
   flutter_test:
@@ -48,3 +50,4 @@ flutter:
   assets:
     - assets/gemini_icon.png
     - assets/gemini_splash.png
+    - .env

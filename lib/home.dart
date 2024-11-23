@@ -3,6 +3,8 @@ import 'package:ai_chatbot/responsive.dart';
 import 'package:ai_chatbot/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,12 +16,38 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TextEditingController _textEditingController = TextEditingController();
 
-  final List<Message> _message = [
-    Message(text: "Hi", isUser: true),
-    Message(text: "What's up", isUser: false),
-    Message(text: "good", isUser: true),
-    Message(text: "same", isUser: false),
-  ];
+  final List<Message> _message = [];
+
+  bool _isLoading = false;
+  callGeminiModel() async {
+    try {
+      String prompt = "";
+      if (_textEditingController.text.isNotEmpty) {
+        _message.add(Message(text: _textEditingController.text, isUser: true));
+        _isLoading = true;
+
+        prompt = _textEditingController.text.trim();
+        _textEditingController.clear();
+
+        setState(() {});
+      }
+
+      final model = GenerativeModel(
+        model: dotenv.env['GEMINI_MODEL']!,
+        apiKey: dotenv.env['GOOGLE_API_KEY']!,
+      );
+
+      final content = [Content.text(prompt)];
+      final response = await model.generateContent(content);
+
+      setState(() {
+        _message.add(Message(text: response.text!, isUser: false));
+        _isLoading = false;
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -162,13 +190,22 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         width: 8,
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.send,
-                          color: Colors.blue,
-                        ),
-                      ),
+                      _isLoading
+                          ? const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                width: 25,
+                                height: 25,
+                                child: CircularProgressIndicator(),
+                              ),
+                            )
+                          : IconButton(
+                              onPressed: () => callGeminiModel(),
+                              icon: const Icon(
+                                Icons.send,
+                                color: Colors.blue,
+                              ),
+                            ),
                     ],
                   ),
                 ),
