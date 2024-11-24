@@ -24,12 +24,13 @@ class _HomePageState extends State<HomePage> {
       String prompt = "";
       if (_textEditingController.text.isNotEmpty) {
         _message.add(Message(text: _textEditingController.text, isUser: true));
-        _isLoading = true;
 
         prompt = _textEditingController.text.trim();
         _textEditingController.clear();
 
-        setState(() {});
+        setState(() {
+          _isLoading = true;
+        });
       }
 
       final model = GenerativeModel(
@@ -45,7 +46,17 @@ class _HomePageState extends State<HomePage> {
         _isLoading = false;
       });
     } catch (e) {
-      debugPrint(e.toString());
+      var snackBar = SnackBar(
+        content: Text(e.toString()),
+        duration: const Duration(seconds: 5),
+      );
+      if (!mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
