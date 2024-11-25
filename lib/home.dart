@@ -46,15 +46,13 @@ class _HomePageState extends State<HomePage> {
         _isLoading = false;
       });
     } catch (e) {
-      var snackBar = SnackBar(
-        content: Text(e.toString()),
-        duration: const Duration(seconds: 5),
-      );
-      if (!mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      }
-
       setState(() {
+        _message.add(
+          Message(
+              text: "There is an error right now: ${e.toString()}",
+              isUser: false,
+              isErrorMessage: true),
+        );
         _isLoading = false;
       });
     }
@@ -143,8 +141,11 @@ class _HomePageState extends State<HomePage> {
                             10,
                           ),
                           decoration: BoxDecoration(
-                            color:
-                                message.isUser ? Colors.blue : Colors.grey[350],
+                            color: message.isUser
+                                ? Colors.blue
+                                : (message.isErrorMessage
+                                    ? Colors.red[700]
+                                    : Colors.grey[350]),
                             borderRadius: message.isUser
                                 ? const BorderRadius.only(
                                     topLeft: Radius.circular(20),
