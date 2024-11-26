@@ -23,16 +23,16 @@ class _HomePageState extends State<HomePage> {
   fetchApi() async {
     try {
       String prompt = "";
-      if (_textEditingController.text.isNotEmpty) {
-        _message.add(Message(text: _textEditingController.text, isUser: true));
-
-        prompt = _textEditingController.text.trim();
-        _textEditingController.clear();
-
-        setState(() {
-          _isLoading = true;
-        });
+      prompt = _textEditingController.text.trim();
+      if (prompt.isEmpty) {
+        return;
       }
+
+      _message.add(Message(text: prompt, isUser: true));
+      _textEditingController.clear();
+      setState(() {
+        _isLoading = true;
+      });
 
       final response = await dio.post(
         "/",
@@ -41,18 +41,18 @@ class _HomePageState extends State<HomePage> {
         },
       );
 
+      _message.add(Message(text: response.data["message"], isUser: false));
       setState(() {
-        _message.add(Message(text: response.data["message"], isUser: false));
         _isLoading = false;
       });
     } catch (e) {
+      _message.add(
+        Message(
+            text: "There is an error right now: ${e.toString()}",
+            isUser: false,
+            isErrorMessage: true),
+      );
       setState(() {
-        _message.add(
-          Message(
-              text: "There is an error right now: ${e.toString()}",
-              isUser: false,
-              isErrorMessage: true),
-        );
         _isLoading = false;
       });
     }
