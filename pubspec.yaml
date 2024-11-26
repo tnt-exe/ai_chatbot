@@ -18,6 +18,7 @@ dependencies:
   flutter_dotenv:
   dio:
   dio_smart_retry:
+  flutter_markdown:
 
 dev_dependencies:
   flutter_test:

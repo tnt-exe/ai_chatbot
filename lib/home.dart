@@ -4,6 +4,7 @@ import 'package:ai_chatbot/responsive.dart';
 import 'package:ai_chatbot/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -141,11 +142,16 @@ class _HomePageState extends State<HomePage> {
                             10,
                           ),
                           decoration: BoxDecoration(
+                            border: message.isUser
+                                ? null
+                                : Border.all(
+                                    color: Colors.grey.withOpacity(0.8),
+                                  ),
                             color: message.isUser
                                 ? Colors.blue
                                 : (message.isErrorMessage
                                     ? Colors.red[700]
-                                    : Colors.grey[350]),
+                                    : Colors.transparent),
                             borderRadius: message.isUser
                                 ? const BorderRadius.only(
                                     topLeft: Radius.circular(20),
@@ -158,13 +164,13 @@ class _HomePageState extends State<HomePage> {
                                     bottomRight: Radius.circular(20),
                                   ),
                           ),
-                          child: Text(
-                            message.text,
-                            style: TextStyle(
-                              color:
-                                  message.isUser ? Colors.white : Colors.black,
-                            ),
-                          ),
+                          child: message.isUser
+                              ? Text(
+                                  message.text,
+                                )
+                              : MarkdownBody(
+                                  data: message.text,
+                                ),
                         ),
                       ),
                     );
