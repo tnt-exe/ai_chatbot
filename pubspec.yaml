@@ -16,7 +16,8 @@ dependencies:
   hydrated_bloc:
   path_provider:
   flutter_dotenv:
-  google_generative_ai:
+  dio:
+  dio_smart_retry:
 
 dev_dependencies:
   flutter_test:
